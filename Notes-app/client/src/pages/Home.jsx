@@ -3,7 +3,7 @@ import FilterBar from '../components/FilterBar';
 
 const Home = () => {
   return (
-    <div className="home-container">
+    <div className ="home-container">
       <FilterBar />
     </div>
   );
