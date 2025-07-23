@@ -49,10 +49,23 @@ const Home = () => {
     }
   };
 
-  // Filter notes by tag and search
+  const handleEditNote = async (id, updatedFields) => {
+    try {
+      const updated = await API.put(`/notes/${id}`, updatedFields);
+      setNotes((prev) =>
+        prev.map((n) => (n._id === id ? updated.data : n))
+      );
+    } catch (err) {
+      console.error('Edit error:', err);
+    }
+  };
+
+  // Apply tag & search filters
   const filteredNotes = notes
     .filter((note) =>
-      selectedTag ? note.tag.toLowerCase() === selectedTag.toLowerCase() : true
+      selectedTag
+        ? note.tag?.toLowerCase() === selectedTag.toLowerCase()
+        : true
     )
     .filter(
       (note) =>
@@ -81,6 +94,7 @@ const Home = () => {
               note={note}
               onDelete={handleDeleteNote}
               onPinToggle={handleTogglePin}
+              onEdit={handleEditNote}
             />
           ))
         )}
